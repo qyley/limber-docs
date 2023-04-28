@@ -6,5 +6,5 @@ generic
 .. toctree::
    :maxdepth: 1
 
-   gnrc_ff.md
+   gnrc_ff
 
