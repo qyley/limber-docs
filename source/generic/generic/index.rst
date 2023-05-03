@@ -7,4 +7,8 @@ generic
    :maxdepth: 1
 
    gnrc_ff
+   gnrc_true_dpram.rst
+   gnrc_simple_dpram.rst
+   gnrc_dist_dpram.rst
+   gnrc_spram.rst
 
