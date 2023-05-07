@@ -9,8 +9,8 @@ gnrc_arbiter
 |   to prevents the arbiter from changing the arbitration decision in next clock. 
 | - remove `LockIn` Parameter, since it can be replaced by `lock_i`
 | - Use an intrinsic tree fabric to replace the `lzc` module in original `rr_arb_tree`,
-|   making a notable reduction of timing path and area.
-| - add a new ``rr_q`` updating method, see the parameter `EXT_RR` and `DEPTH`.
+|   making a slightly reduction of timing path and area.
+| - add a new `rr_q` updating method, see the parameter `EXT_RR` and `DEPTH`.
 
 
 Parameters
@@ -24,9 +24,9 @@ Parameters
  :widths: 2, 2, 2, 4
  
  "N", "int unsigned", ">=1", "Number of inputs to be arbitrated."
- "DW", "int unsigned", ">=1", "Data width of the payload in bits. Lose efficacy if ``DTYPE`` is overwritten."
- "EXT_RR", "bit", "{0,1}", "The ``EXT_RR`` option allows to override the internal round robin counter via the `rr_i` signal. ``rr_i`` must be a big-endian thermometer code signal, such as '1111_1000' which means the priority of idx is '3,4,5,6,7,0,1,2'. This can be useful in case multiple arbiters need to have rotating priorities that are operating in lock-step. If static priority arbitration is needed, just connect ``rr_i`` to '0. Set to 1'b1 to enable."
- "LEAKY", "bit", "{0,1}", "If ``LEAKY`` is set, the ``req_o`` will leak out whenever any ``req_i`` is valid, and the ``gnt_o`` will leak out whenever ``gnt_i`` is valid. Enabling ``LEAKY`` make the request no longer depends on grant, leads to a reduction of arbiter delay and area. Set to 1'b1 to enable."
+ "DW", "int unsigned", ">=1", "Data width of the payload in bits. Lose efficacy if `DTYPE` is overwritten."
+ "EXT_RR", "bit", "{0,1}", "The `EXT_RR` option allows to override the internal round robin counter via the `rr_i` signal. `rr_i` must be a big-endian thermometer code signal, such as '1111_1000' which means the priority of idx is '3,4,5,6,7,0,1,2'. This can be useful in case multiple arbiters need to have rotating priorities that are operating in lock-step. If static priority arbitration is needed, just connect `rr_i` to '0. Set to 1'b1 to enable."
+ "LEAKY", "bit", "{0,1}", "If `LEAKY` is set, the `req_o` will leak out whenever any `req_i` is valid, and the `gnt_o` will leak out whenever `gnt_i` is valid. Enabling `LEAKY` make the request no longer depends on grant, leads to a reduction of arbiter delay and area. Set to 1'b1 to enable."
  "DEPTH", "int", "{0,1,2}", "There are three basic methods for updating the round-robin pointer: 
 
  1. After a grant, increment the pointer. This method don't cares which request is, so depth is 0. 
