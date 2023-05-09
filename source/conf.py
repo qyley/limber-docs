@@ -11,10 +11,20 @@ copyright = '2023, QyLey'
 author = 'QyLey'
 release = '0.1'
 
+numfig=True
+numfig_format = {'figure': 'Figure %s', 'table': 'Table %s', 'code-block': 'Listing %s'}
+
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = []
+extensions = [
+    'sphinxcontrib.wavedrom',
+    'sphinx.ext.todo',
+]
+
+# Wavedrom
+wavedrom_html_jsinline = False
+render_using_wavedrompy = True
 
 templates_path = ['_templates']
 exclude_patterns = []

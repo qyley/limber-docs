@@ -171,7 +171,7 @@ Tree-style structure
 Select "req_o" out of many "req_i"
 ````````````````````````````````````````````````
 
-从一颗 odd-even tree 的叶子节点出发，将 ``req_i`` 依次输入各个叶子节点，经过多层 MUX 选择，最终在树根产生被许可的 ``req_o`` 输出。
+从一棵 odd-even tree 的叶子节点出发，将 ``req_i`` 依次输入各个叶子节点，经过多层 MUX 选择，最终在树根产生被许可的 ``req_o`` 输出。
 
 原始的 rr_arb_tree 的选择判断条件是有缺陷的，无法保证叶子节点中按 ``req_i`` 从低位（左）到高位（右）的优先顺序选取。下面是 rr_arb_tree 中每个节点产生选择信号的逻辑，因为 rr_arb_tree 中的 ``rr_q`` 是二进制编码的，为了避免译码开销，rr_arb_tree 直接用二进制的比特作为条件，只有当 ``rr_q`` 所对应的最高优先级 ``req_i`` 信号为 1 时，该电路才能正常工作，否则选择出的 ``req_o`` 顺序是混乱的。
 
@@ -264,8 +264,8 @@ gnrc_arbiter 中使用 ``gnt_nodes`` 来记录选择路径，使用 ``rr_nodes``
     
             assign gnt_nodes[Idx1]       = gnt_nodes[Idx0] & ~sel;
             assign gnt_nodes[Idx2]       = gnt_nodes[Idx0] & sel;
-            assign rr_nodes[Idx1]         = rr_nodes[Idx0];
-            assign rr_nodes[Idx2]         = rr_nodes[Idx0] | gnt_nodes[Idx0]&~sel;
+            assign rr_nodes[Idx1]        = rr_nodes[Idx0];
+            assign rr_nodes[Idx2]        = rr_nodes[Idx0] | gnt_nodes[Idx0]&~sel;
         
         end
     end
@@ -274,10 +274,6 @@ gnrc_arbiter 中使用 ``gnt_nodes`` 来记录选择路径，使用 ``rr_nodes``
 最终 ``rr_d`` 取决于最下层的 ``gnt_nodes`` 和 ``rr_nodes``，如果对应的 ``rr_nodes`` 为1，则说明子树所有节点都在被选中的节点的更高位，对应的 ``rr_d`` bit位可以 直接置1，否则根据选择路径来判断，若选择的是 odd node，则将 ``rr_d`` 中下一级子树中的 odd node 和 even node 对应的bit都置1，若选择的是 even node，则只将 ``rr_d`` 中 even node 对应的bit置1。
 
 .. code:: verilog
-
-    // start by root node
-    assign gnt_nodes[0] = gnt_i;
-    assign rr_nodes[0] = 1'b0;
 
     // for level in tree 
     for (genvar level = 0; unsigned'(level) < NumLevels; level++) begin : gen_levels
@@ -317,9 +313,9 @@ From highest to lowest
 
     // rr_q shift using method 1
     // -2 = {{N-1{1'b1}},1'b0}
-    assign rr_d = rr_q[N-1] ? -2 : {rr_q[N-2:0],1'b0};
+    assign rr_d = ~rr_q[N-1] ? -2 : {rr_q[N-2:0],1'b0};
 
-在 ``rr_q`` 的第3种更新方式中（对应 ``DEPTH= 2`` ），需要将当前许可 `requester` 的下一个 **有效的** `requester` 设置为最高优先级，因此需要分别产生当前许可的 `requester` 作为 ``gnt_o`` 和下一个有效的 `requester` 作为 ``rr_d`` 。 此时需要分别用两个树型结构，一个正常使用 ``rr_q`` 作为 mask 寻找当前许可的 `requester` ，另一个使用左移一位的 ``rr_q`` 作为 mask 寻找下一个有效的 `requester` 。
+在 ``rr_q`` 的第3种更新方式中（对应 ``DEPTH= 2`` ），需要将当前许可 `requester` 的下一个 **有效的** `requester` 设置为最高优先级，因此需要分别产生当前许可的 `requester` 作为 ``gnt_o`` 和下一个有效的 `requester` 作为 ``rr_d`` 。 此时需要分别用两个树形结构，一个正常使用 ``rr_q`` 作为 mask 寻找当前许可的 `requester` ，另一个使用左移一位的 ``rr_q`` 作为 mask 寻找下一个有效的 `requester` 。
 
 
 
@@ -363,3 +359,13 @@ Timing & Area
    /// register path. As the output data usually also terminates in a register the parameter `FairArb`
 
 最长的路径一般都在 input 到 output 之间的数据通路上，而在这一方面 gnrc_arbiter 和 rr_arb_tree区别不大。
+
+
+Related
+````````````````````````````````````````````````
+
+
+1. `pulp commoc cells - Github <https://github.com/pulp-platform/common_cells/blob/master/src/rr_arb_tree.sv>`_
+2. `Systemverilog实现参数化的Round-Robin Arbiter Tree - Zhihu <https://zhuanlan.zhihu.com/p/593368451>`_
+3. `Round Robin Scheduler - Intel <https://www.intel.cn/content/www/cn/zh/docs/programmable/683353/20-1/round-robin-scheduler.html>`_
+4. `Arbiters Design Ideas and Coding Styles - JianguoCloud <https://www.jianguoyun.com/p/DVx4NtMQ4_n3CRjVmYUFIAA>`_
