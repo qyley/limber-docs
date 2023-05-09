@@ -25,6 +25,7 @@ IOs
    
  "clk_i", "input", "logic", "Clock"
  "rst_ni", "input", "logic", "Asynchronous reset active low"
+ "flush_i", "input", "logic", "Synchronous clear all data"
  "d_i", "input", "DTYPE", "serial data input"
  "d_o", "output", "DTYPE", "serial data output"
  

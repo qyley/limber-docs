@@ -25,6 +25,7 @@ IOs
    
  "clk_i", "input", "logic", "Clock"
  "rst_ni", "input", "logic", "Asynchronous reset active low"
+ "flush_i", "input", "logic", "Synchronous clear all data"
  "valid_i", "input", "logic", "valid in"
  "data_i", "input", "DTYPE", "data in"
  "valid_o", "output", "logic", "valid out"
