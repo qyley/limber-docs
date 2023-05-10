@@ -7,6 +7,6 @@ Limber generic包含SoC设计中的通用模块，工程主要包含3部分：
    :maxdepth: 1
 
    common_cells/index
-   general_old/index
+   general_deprecated/index
    generic/index
 

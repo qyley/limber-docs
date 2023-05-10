@@ -18,6 +18,7 @@ Parameters
  "DW", "int(default)", ">=1", "Data bit width"
  "DP", "int(default)", ">=2", "FIFO depth"
  "FWFT", "bit", "{0,1}", "1 to enable First Word Fall Through FIFO, 0 for Standard FIFO."
+ "BYPASS", "bit", "{0,1}", "Bypass `data_i` to `data_o` when fifo is empty. **Only use in FWFT mode** . If `BYPASS` activated, a combinational path exists between output and input. In the case of simultaneously read and write when FIFO is empty, data_o can derived directly from data_in. This feature is useful under some situations. However if you needn't this, set `BYPASS` = 0."
  "CW", "int(default)", "$clog2(DP+1)", "data counter bit width (auto-gen, do **NOT** change)"
  
 
@@ -31,7 +32,7 @@ IOs
    
  "clk_i", "input", "logic", "Clock, positive edge triggered."
  "rst_ni", "input", "logic", "Asynchronous reset, active low."
- "flush_i", "input", "logic", "Clears all data in FIFO."
+ "flush_i", "input", "logic", "Clears all data in FIFO. flush can only clear registered data, **NO** effect on combinational path."
  "data_i", "input", "logic [DW-1:0]", "data input"
  "wen_i", "input", "logic", "write enable (push)"
  "ren_i", "input", "logic", "read enable (pop)"

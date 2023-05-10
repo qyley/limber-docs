@@ -38,7 +38,7 @@ IOs
    :widths: 2, 1, 2, 3
    
    "clk_i", "input", "logic", "clock input"
-   "arst_ni", "input", "logic", "asynchronous low-active reset input"
+   "rst_ni", "input", "logic", "asynchronous low-active reset input"
    "mode_i", "input", "logic", "mode select input. if mode=0, counter will stop once overflow is assert and hold on until a new clr or ld. if mode=1, counter work periodically and overflow will not be hold."
    "down_i", "input", "logic", "Count up(0) or down(1)"
    "ld_i", "input", "logic", "load counter configure data(max, inc)"
