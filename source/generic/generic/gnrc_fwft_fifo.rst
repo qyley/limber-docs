@@ -74,7 +74,7 @@ Flush
 
 .. wavedrom::
     :name: fwft_fifo_t2
-    :caption: FWFT特性的读写时序
+    :caption: flush a Bypass FIFO
 
     {
       signal: [

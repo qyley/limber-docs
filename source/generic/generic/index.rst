@@ -42,6 +42,7 @@ CODEC
    gnrc_therm2onehot.rst
    gnrc_fractional_counter.rst
    gnrc_edge_detect.rst
+   gnrc_addr_decode.rst
 
 Memory
 `````````
@@ -68,4 +69,8 @@ Connect
    gnrc_fifo.rst
    gnrc_mem2fifo.rst
    gnrc_fwft_fifo.rst
+   gnrc_stream_mux.rst
+   gnrc_stream_demux.rst
+   gnrc_stream_share_bus.rst
+   gnrc_stream_cross_bar.rst
 

@@ -33,7 +33,7 @@ Parameters
 
  2. After a grant, move the pointer to the requester after the one which just received the grant. This method only cares which request is granted, so depth is 1. 
 
- 3. After a grant, move the pointer to the first Active requester after the one which just received the grant. This method cares which request is granted and the next valid request, so depth is 2. 
+ 3. After a grant, move the pointer to the first Active requester after the one which just received the grant. This method cares which request is granted and **look ahead** the next valid request, so depth is 2. 
 
  Change `DEPTH` to set the updating method."
  "DTYPE", "type", "logic [DW-1:0]", "Data type of the payload, can be overwritten with custom type. Only use of `DW`."

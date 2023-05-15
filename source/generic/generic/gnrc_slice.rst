@@ -47,7 +47,7 @@ IOs
    
  "clk_i", "input", "logic", "Clock, positive edge triggered."
  "rst_ni", "input", "logic", "Asynchronous reset, active low."
- "flush_i", "input", "logic", "Clears the registed data in slice. makes **NO** effect on combinational path"
+ "flush_i", "input", "logic", "Clears the registered data in slice. makes **NO** effect on combinational path"
  "valid_i", "input", "logic", "Input source is valid."
  "data_i", "input", "DTYPE", "Input source data."
  "ready_o", "output", "logic", "Input destination is ready."
